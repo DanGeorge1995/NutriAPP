@@ -1,22 +1,16 @@
 import "./styles/global.scss";
-import type { RootState } from "./redux/store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "./redux/slices/counterSlice";
+import useAuth from "./custom-hooks/useAuth";
 
 function App() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
+  const { isAuth, logIn, logOut } = useAuth();
+
   return (
     <>
       <div>
         <div>
-          <button aria-label="Increment value" onClick={() => dispatch(increment())}>
-            Increment
-          </button>
-          <span>{count}</span>
-          <button aria-label="Decrement value" onClick={() => dispatch(decrement())}>
-            Decrement
-          </button>
+          {!isAuth && <button onClick={logIn}>LOGIN</button>}
+          <span>{isAuth ? "LOGED ID" : "LOGED OUT"}</span>
+          {isAuth && <button onClick={logOut}>LOGOUT</button>}
         </div>
       </div>
     </>
