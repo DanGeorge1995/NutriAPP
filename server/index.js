@@ -55,8 +55,7 @@ app.post("/create-user", async (req, res) => {
       if (result.length !== 0) {
         connection.release();
         console.log("------> Email already exists");
-        // res.sendStatus(409);
-        res.send({ error: "This email is not supported!" });
+        res.status(409).send({ message: "Email already in use!" });
       } else {
         await connection.query(insert_query, async (err, result) => {
           // connection.release();
